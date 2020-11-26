@@ -16,6 +16,10 @@ const NorteSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true
+    },
+    read: {
+        type: Boolean,
+        default: false
     }
 
 })

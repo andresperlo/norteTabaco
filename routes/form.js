@@ -23,6 +23,6 @@ router.post('/send', [
 
 router.get('/getmessage', sendForm.GetMessage)
 
-
+router.put('/message/:id', sendForm.editMessage)
 
 module.exports = router

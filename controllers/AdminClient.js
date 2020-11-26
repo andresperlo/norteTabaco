@@ -1,6 +1,7 @@
-const NorteModel = require('../models/norteModel')
-const LoginModel = require('../models/LoginAdmin')
-const {validationResult} = require('express-validator')
+const NorteModel = require('../models/norteModel');
+const LoginModel = require('../models/LoginAdmin');
+const {validationResult} = require('express-validator');
+const mongoose = require('mongoose');
 
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -89,4 +90,22 @@ exports.LoginAdmin = async (req, res) => {
         console.log('error ->', error)
         return res.status(500).json({ mensaje: 'ERROR', error })
     }
+}
+
+exports.editMessage = async (req, res) => {
+    console.log(req.body); 
+    try {
+
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ mensaje: 'Mensaje no encontrado' });
+        }
+
+        const message = await NorteModel.findByIdAndUpdate(req.params.id, req.body, { new: true })
+
+        res.send(message)
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+
 }

@@ -1,23 +1,29 @@
 const NorteModel = require('../models/norteModel');
 const LoginModel = require('../models/LoginAdmin');
-const {validationResult} = require('express-validator');
+const { validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 exports.SendForm = async (req, res) => {
-    const { nameClient, cellNumber, message } = req.body
 
-    const client = {
-        nameClient,
-        cellNumber,
-        message
-    };
+    try {
+        const { nameClient, cellNumber, message, product } = req.body
 
-    const newClient = new NorteModel(client);
-    await newClient.save();
-    res.send(newClient)
+        const client = {
+            nameClient,
+            cellNumber,
+            message,
+            product
+        };
+
+        const newClient = new NorteModel(client);
+        await newClient.save();
+        res.send(newClient)
+    } catch (error) {
+        console.log(error);
+    }
 
 }
 
@@ -29,13 +35,13 @@ exports.GetMessage = async (req, res) => {
 }
 
 exports.registeradmin = async (req, res) => {
-    
+
     console.log('entra a la ruta')
-    const {username, password } = req.body
+    const { username, password } = req.body
 
     const admin = {
         username,
-        token:[]
+        token: []
     };
 
     console.log('admin', admin)
@@ -83,9 +89,9 @@ exports.LoginAdmin = async (req, res) => {
 
     try {
         const token = jwt.sign(jwt_payload, process.env.JWT_SECRET, { expiresIn: process.env.TIME_EXP })
-        userLogin.token = [ token ] 
+        userLogin.token = [token]
         await LoginModel.update({ username: userLogin.username }, userLogin)
-        res.send({ mensaje: 'Logueado Correctamente', token,  role: userLogin.roleType, id: userLogin._id })
+        res.send({ mensaje: 'Logueado Correctamente', token, role: userLogin.roleType, id: userLogin._id })
     } catch (error) {
         console.log('error ->', error)
         return res.status(500).json({ mensaje: 'ERROR', error })
@@ -93,7 +99,7 @@ exports.LoginAdmin = async (req, res) => {
 }
 
 exports.editMessage = async (req, res) => {
-    console.log(req.body); 
+    console.log(req.body);
     try {
 
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {

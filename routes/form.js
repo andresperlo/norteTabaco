@@ -18,7 +18,8 @@ router.post('/login', [
 router.post('/send', [
     check('nameClient', 'Campo Vacio. Nombre').notEmpty(),
     check('cellNumber', ' Campo Vacio. Numero de CEl').notEmpty(),
-    check('message', 'Campo Vacio Mensaje').notEmpty()
+    check('message', 'Campo Vacio Mensaje').notEmpty(),
+    check('product', 'Campo Producto Vacio').notEmpty(),
 ], sendForm.SendForm)
 
 router.get('/getmessage', sendForm.GetMessage)

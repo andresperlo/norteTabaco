@@ -20,6 +20,11 @@ const NorteSchema = new mongoose.Schema({
     read: {
         type: Boolean,
         default: false
+    },
+    product: {
+        type: String,
+        required: true,
+        trim: true
     }
 
 })

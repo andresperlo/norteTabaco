@@ -115,3 +115,14 @@ exports.editMessage = async (req, res) => {
     }
 
 }
+
+exports.Logout = async (req, res) => {
+    console.log(req.query);
+    try {
+        await LoginModel.updateOne({}, { $set: { token: [] } })
+        res.send({ mensaje: 'Deslogueo ok' })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ mensaje: 'Error', error })
+    }
+}

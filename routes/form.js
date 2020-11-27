@@ -8,22 +8,26 @@ const sendForm = require('../controllers/AdminClient')
 router.post('/register', [
     check('username', 'campo vacio user').notEmpty(),
     check('password', 'campo vacio pass').notEmpty()
-], sendForm.registeradmin)
+], sendForm.registeradmin);
 
 router.post('/login', [
     check('username', 'Campo Vacio').notEmpty(),
     check('password', 'Campo Vacio').notEmpty()
-], sendForm.LoginAdmin)
+], sendForm.LoginAdmin);
 
 router.post('/send', [
     check('nameClient', 'Campo Vacio. Nombre').notEmpty(),
     check('cellNumber', ' Campo Vacio. Numero de CEl').notEmpty(),
     check('message', 'Campo Vacio Mensaje').notEmpty(),
     check('product', 'Campo Producto Vacio').notEmpty(),
-], sendForm.SendForm)
+], sendForm.SendForm);
 
-router.get('/getmessage', sendForm.GetMessage)
+router.put('/message/:id', sendForm.editMessage);
 
-router.put('/message/:id', sendForm.editMessage)
+router.get('/getmessage', sendForm.GetMessage);
+router.get('/logout', sendForm.Logout)
+
+
+
 
 module.exports = router
